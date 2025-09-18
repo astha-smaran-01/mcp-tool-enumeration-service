@@ -9,10 +9,21 @@ RUN apt-get update && apt-get install -y \
     curl \
     nodejs \
     npm \
+    git \
     && rm -rf /var/lib/apt/lists/*
+
+# Verify Node.js and npm versions
+RUN node --version && npm --version
+
+# Pre-install popular MCP packages for npx and uvx
+COPY scripts/preinstall_mcp_packages.sh /tmp/preinstall_mcp_packages.sh
+COPY popular_mcp_packages.json /tmp/popular_mcp_packages.json
+RUN chmod +x /tmp/preinstall_mcp_packages.sh && \
+    /tmp/preinstall_mcp_packages.sh
 
 # Install uv
 RUN pip install uv
+
 
 # Copy dependency files and README (required for package build)
 COPY pyproject.toml  README.md ./

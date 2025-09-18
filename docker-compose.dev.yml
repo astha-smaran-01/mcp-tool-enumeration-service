@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mcp-tool-enumeration-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-tool-enumeration-service-dev
+    ports:
+      - "8503:8503"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8503
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    volumes:
+      # Mount source code for hot reload
+      - .:/app
+      # Mount logs directory
+      - ./logs:/app/logs
+      # Exclude node_modules and other build artifacts
+      - /app/venv
+      - /app/.venv
+      - /app/__pycache__
+      - /app/.pytest_cache
+    networks:
+      - mcp-network
+    restart: unless-stopped
+    command: ["uv", "run", "uvicorn", "app.protocols.http.main:app", "--host", "0.0.0.0", "--port", "8503", "--reload"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8503/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  mcp-network:
+    driver: bridge
+    name: mcp-tool-enumeration-network-dev

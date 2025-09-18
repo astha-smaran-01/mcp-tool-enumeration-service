@@ -111,7 +111,7 @@ async def enumerate_tools(
         
         # Return in Astha AI standard format
         return {
-            "success": True,
+            "success": True if response.status == "success" else False,
             "message": response.message,
             "data": {
                 "__typename": response.model_typename,
@@ -140,136 +140,6 @@ async def enumerate_tools(
             }
         )
 
-
-@router.post("/test/aws")
-async def test_aws_example(
-    use_case: EnumerateToolsUseCase = Depends(get_enumerate_tools_use_case)
-) -> Dict[str, Any]:
-    """
-    Quick test endpoint using AWS Knowledge MCP server example.
-    
-    This endpoint directly tests the AWS Knowledge MCP server configuration.
-    """
-    try:
-        # Create request with AWS example
-        request = ToolEnumerationRequest(
-            mcp_json={
-                "mcpServers": {
-                    "aws-knowledge-mcp-server": {
-                        "url": "https://knowledge-mcp.global.api.aws"
-                    }
-                }
-            },
-            timeout_seconds=30,
-            include_schemas=True,
-            parallel_discovery=True
-        )
-        
-        logger.info("Testing AWS Knowledge MCP server example")
-        
-        response = await use_case.execute(request)
-        
-        return {
-            "success": True,
-            "message": "AWS Knowledge MCP server test completed",
-            "data": {
-                "__typename": response.model_typename,
-                "status": response.status,
-                "timestamp": response.timestamp,
-                "servers": [server.model_dump() for server in response.servers],
-                "tools": [tool.model_dump() for tool in response.tools],
-                "total_servers": response.total_servers,
-                "connected_servers": response.connected_servers
-            }
-        }
-        
-    except Exception as e:
-        logger.error(f"AWS test failed: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "status": 500,
-                "success": False,
-                "message": "AWS Knowledge MCP server test failed",
-                "data": {
-                    "message": "AWS Knowledge MCP server test failed",
-                    "error": str(e),
-                    "error_code": "AWS_TEST_ERROR"
-                }
-            }
-        )
-
-
-@router.get("/examples")
-async def get_examples() -> Dict[str, Any]:
-    """
-    Get example MCP JSON configurations for testing.
-    
-    Returns various example configurations including AWS, Infobip, and PayPal MCP servers.
-    """
-    examples = {
-        "aws_knowledge": {
-            "mcp_json": {
-                "mcpServers": {
-                    "aws-knowledge-mcp-server": {
-                        "url": "https://knowledge-mcp.global.api.aws"
-                    }
-                }
-            }
-        },
-        "infobip_2fa": {
-            "mcp_json": {
-                "mcpServers": {
-                    "info-bib-2fa": {
-                        "url": "https://mcp.infobip.com/2fa"
-                    }
-                }
-            }
-        },
-        "paypal_npx": {
-            "mcp_json": {
-                "mcpServers": {
-                    "paypal": {
-                        "command": "npx",
-                        "args": [
-                            "-y",
-                            "@paypal/mcp",
-                            "--tools=all"
-                        ],
-                        "env": {
-                            "PAYPAL_ACCESS_TOKEN": "YOUR_PAYPAL_ACCESS_TOKEN",
-                            "PAYPAL_ENVIRONMENT": "SANDBOX"
-                        }
-                    }
-                }
-            }
-        },
-        "paypal_remote": {
-            "mcp_json": {
-                "mcpServers": {
-                    "paypal-mcp-server": {
-                        "command": "npx",
-                        "args": [
-                            "mcp-remote",
-                            "https://mcp.sandbox.paypal.com/sse",
-                            "--header",
-                            "Authorization: Bearer <auth_header>"
-                        ]
-                    }
-                }
-            }
-        }
-    }
-    
-    return {
-        "success": True,
-        "message": "MCP server examples retrieved successfully",
-        "data": {
-            "__typename": "McpExamples",
-            "examples": examples,
-            "usage": "Use any of these examples in the /enumerate endpoint by copying the 'mcp_json' value"
-        }
-    }
 
 
 @router.get("/health")

@@ -59,8 +59,8 @@ class StdioToolDiscoveryStrategy(IToolDiscoveryStrategy):
                 errors.append(f"Command '{server_config.command}' not found in PATH for server {server_name}")
                 return tools, errors, warnings
             
-            # Enhanced logging for uvx commands
-            if server_config.command in ["uvx", "uv"]:
+            # Enhanced logging for npx/uvx commands
+            if server_config.command in ["npx", "uvx", "uv"]:
                 logger.info(f"{server_config.command} command detected for {server_name}, args: {server_config.args}")
                 if not server_config.args:
                     errors.append(f"{server_config.command} requires package name as argument for server {server_name}")
@@ -112,7 +112,15 @@ class StdioToolDiscoveryStrategy(IToolDiscoveryStrategy):
             )
             
             try:
-                process_timeout = min(timeout_seconds, 10)
+                # For npx commands, increase timeout as package installation may take time
+                if server_config.command == "npx":
+                    process_timeout = min(timeout_seconds, 30)  # Allow more time for npx package installation
+                    logger.info(f"Increased timeout to {process_timeout}s for npx command")
+                else:
+                    process_timeout = min(timeout_seconds, 10)
+                
+                # Give the process a moment to start up
+                await asyncio.sleep(0.5)
                 
                 # Check if process is still running
                 if process.poll() is not None:
@@ -260,7 +268,7 @@ class StdioToolDiscoveryStrategy(IToolDiscoveryStrategy):
         except Exception as e:
             error_msg = f"STDIO discovery failed for {server_name}: {str(e)}"
             
-            if server_config.command in ["uvx", "uv"]:
+            if server_config.command in ["npx", "uvx", "uv"]:
                 if "No module named" in str(e):
                     error_msg += " (Python package may not be available for uvx)"
                 elif "command not found" in str(e):
@@ -268,7 +276,11 @@ class StdioToolDiscoveryStrategy(IToolDiscoveryStrategy):
                 elif "Connection refused" in str(e):
                     error_msg += " (Target MCP server may be unreachable)"
                 elif "timeout" in str(e).lower():
-                    error_msg += " (uvx execution or package installation timed out)"
+                    error_msg += " (npx/uvx execution or package installation timed out)"
+                elif "Invalid argument" in str(e):
+                    error_msg += " (Package may require specific arguments - check package documentation)"
+                elif "npm WARN" in str(e):
+                    error_msg += " (Package installation warnings - may still work)"
                     
                 logger.error(f"{server_config.command} discovery error for {server_name}: {str(e)}")
             
