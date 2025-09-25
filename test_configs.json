@@ -1,0 +1,142 @@
+{
+  "configurations": [
+    {
+      "name": "Infobip Messages API",
+      "mcp_json": {
+        "mcpServers": {
+          "ib-messages-api": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.infobip.com/messages-api",
+              "--header",
+              "Authorization: App ${INFOBIP_API_KEY}"
+            ],
+            "env": {
+              "INFOBIP_API_KEY": "<Your Infobip API Key here>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "PayPal Sandbox",
+      "mcp_json": {
+        "mcpServers": {
+          "paypal": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.sandbox.paypal.com/sse",
+              "--header",
+              "Authorization: Bearer ${PAYPAL_API_KEY}"
+            ],
+            "env": {
+              "PAYPAL_API_KEY": "<Your PayPal API Key here>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Apify Web Scraping",
+      "mcp_json": {
+        "mcpServers": {
+          "apify": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.apify.com/sse",
+              "--header",
+              "Authorization: Bearer ${APIFY_API_KEY}"
+            ],
+            "env": {
+              "APIFY_API_KEY": "<Your Apify API Key here>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Sentry Error Monitoring",
+      "mcp_json": {
+        "mcpServers": {
+          "sentry": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.sentry.dev/sse",
+              "--header",
+              "Authorization: Bearer ${SENTRY_API_KEY}"
+            ],
+            "env": {
+              "SENTRY_API_KEY": "<Your Sentry API Key here>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Linear Project Management",
+      "mcp_json": {
+        "mcpServers": {
+          "linear": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.linear.app/sse",
+              "--header",
+              "Authorization: Bearer ${LINEAR_API_KEY}"
+            ],
+            "env": {
+              "LINEAR_API_KEY": "<Your Linear API Key here>"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Multi-Service Configuration",
+      "mcp_json": {
+        "mcpServers": {
+          "paypal": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.sandbox.paypal.com/sse",
+              "--header",
+              "Authorization: Bearer ${PAYPAL_API_KEY}"
+            ],
+            "env": {
+              "PAYPAL_API_KEY": "<Your PayPal API Key here>"
+            }
+          },
+          "apify": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.apify.com/sse",
+              "--header",
+              "Authorization: Bearer ${APIFY_API_KEY}"
+            ],
+            "env": {
+              "APIFY_API_KEY": "<Your Apify API Key here>"
+            }
+          },
+          "linear": {
+            "command": "npx",
+            "args": [
+              "mcp-remote",
+              "https://mcp.linear.app/sse",
+              "--header",
+              "Authorization: Bearer ${LINEAR_API_KEY}"
+            ],
+            "env": {
+              "LINEAR_API_KEY": "<Your Linear API Key here>"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
