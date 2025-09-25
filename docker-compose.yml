@@ -14,8 +14,6 @@ services:
       - PYTHONPATH=/app
       - PYTHONUNBUFFERED=1
     volumes:
-      # Mount source code for development (comment out for production)
-      - .:/app
       # Mount logs directory
       - ./logs:/app/logs
     networks:
