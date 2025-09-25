@@ -12,8 +12,8 @@ import logging
 from fastapi import APIRouter, HTTPException, Depends
 from typing import Dict, Any
 
-from application.use_cases.enumerate_tools import EnumerateToolsUseCase
-from domain.dto.tool_enumeration_dtos import ToolEnumerationRequest, ToolEnumerationResponse
+from src.application.use_cases.enumerate_tools import EnumerateToolsUseCase
+from src.domain.dto.tool_enumeration_dtos import ToolEnumerationRequest, ToolEnumerationResponse
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ router = APIRouter(prefix="/api/v1/tools", tags=["Tool Enumeration"])
 def get_enumerate_tools_use_case() -> EnumerateToolsUseCase:
     """Dependency injection for enumerate tools use case."""
     # This will be properly injected via container
-    from app.container import get_container
+    from src.app.container import get_container
     container = get_container()
     return container.enumerate_tools_use_case()
 

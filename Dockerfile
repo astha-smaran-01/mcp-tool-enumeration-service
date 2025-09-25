@@ -46,4 +46,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8503}/health || exit 1
 
 # Start the application
-CMD ["uv", "run", "python", "-m", "app.protocols.http.main"]
+CMD ["uv", "run", "python", "-m", "src.app.protocols.http.main"]

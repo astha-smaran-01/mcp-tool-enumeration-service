@@ -20,15 +20,15 @@ import logging
 from datetime import datetime
 from typing import List, Optional, Tuple
 
-from domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy
-from domain.dto.tool_enumeration_dtos import (
+from src.domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy
+from src.domain.dto.tool_enumeration_dtos import (
     ToolDiscoveryMethod,
     ServerTransportType,
     EnumeratedTool,
     ToolSchema,
     ToolParameter,
 )
-from domain.entities.mcp_config import McpServerConfig
+from src.domain.entities.mcp_config import McpServerConfig
 
 logger = logging.getLogger(__name__)
 

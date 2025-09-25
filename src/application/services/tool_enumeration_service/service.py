@@ -16,7 +16,7 @@ import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
-from domain.dto.tool_enumeration_dtos import (
+from src.domain.dto.tool_enumeration_dtos import (
     ToolDiscoveryMethod,
     ServerTransportType,
     EnumeratedTool,
@@ -25,8 +25,8 @@ from domain.dto.tool_enumeration_dtos import (
     ServerResult,
     SimplifiedTool
 )
-from domain.entities.mcp_config import McpJsonConfig, McpServerConfig
-from domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy, IToolEnumerationService
+from src.domain.entities.mcp_config import McpJsonConfig, McpServerConfig
+from src.domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy, IToolEnumerationService
 
 from .strategies import (
     HttpToolDiscoveryStrategy,

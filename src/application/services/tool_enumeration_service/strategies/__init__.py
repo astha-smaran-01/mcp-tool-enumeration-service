@@ -11,7 +11,7 @@ Version: 1.0
 Status: Active
 """
 
-from domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy
+from src.domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy
 from .http_strategy import HttpToolDiscoveryStrategy
 from .stdio_strategy import StdioToolDiscoveryStrategy
 from .mcp_json_strategy import McpJsonParsingStrategy

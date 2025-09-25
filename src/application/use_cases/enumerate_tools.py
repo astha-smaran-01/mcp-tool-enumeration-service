@@ -9,8 +9,8 @@ Status: Active
 """
 
 import logging
-from domain.interfaces.tool_discovery_interfaces import IToolEnumerationService
-from domain.dto.tool_enumeration_dtos import ToolEnumerationRequest, ToolEnumerationResponse
+from src.domain.interfaces.tool_discovery_interfaces import IToolEnumerationService
+from src.domain.dto.tool_enumeration_dtos import ToolEnumerationRequest, ToolEnumerationResponse
 
 logger = logging.getLogger(__name__)
 

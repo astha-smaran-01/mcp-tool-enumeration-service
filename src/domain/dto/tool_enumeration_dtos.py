@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 from pydantic._internal._model_construction import ModelMetaclass
 from datetime import datetime
 
-from domain.entities.mcp_config import McpJsonConfig
+from src.domain.entities.mcp_config import McpJsonConfig
 
 
 class TypeNameMeta(ModelMetaclass):

@@ -32,7 +32,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["app", "domain", "adapters", "application"]
+packages = ["src"]
 
 [tool.black]
 line-length = 88

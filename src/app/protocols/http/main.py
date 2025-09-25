@@ -12,7 +12,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from adapters.inbound.http.tool_enumeration_controller import router as tool_router
+from src.adapters.inbound.http.tool_enumeration_controller import router as tool_router
 
 # Configure logging
 logging.basicConfig(

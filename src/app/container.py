@@ -11,19 +11,19 @@ Status: Active
 from functools import lru_cache
 from typing import Dict
 
-from domain.dto.tool_enumeration_dtos import ToolDiscoveryMethod
-from domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy, IToolEnumerationService
+from src.domain.dto.tool_enumeration_dtos import ToolDiscoveryMethod
+from src.domain.interfaces.tool_discovery_interfaces import IToolDiscoveryStrategy, IToolEnumerationService
 
 # Application Services
-from application.services.tool_enumeration_service import ToolEnumerationService
-from application.services.tool_enumeration_service.strategies import (
+from src.application.services.tool_enumeration_service import ToolEnumerationService
+from src.application.services.tool_enumeration_service.strategies import (
     McpJsonParsingStrategy,
     HttpToolDiscoveryStrategy,
     StdioToolDiscoveryStrategy
 )
 
 # Use Cases
-from application.use_cases.enumerate_tools import EnumerateToolsUseCase
+from src.application.use_cases.enumerate_tools import EnumerateToolsUseCase
 
 
 class Container:

@@ -11,13 +11,13 @@ Status: Active
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 
-from domain.dto.tool_enumeration_dtos import (
+from src.domain.dto.tool_enumeration_dtos import (
     EnumeratedTool, 
     ServerTransportType,
     ToolEnumerationRequest,
     ToolEnumerationResponse
 )
-from domain.entities.mcp_config import McpServerConfig, McpJsonConfig
+from src.domain.entities.mcp_config import McpServerConfig, McpJsonConfig
 
 
 class IToolDiscoveryStrategy(ABC):
